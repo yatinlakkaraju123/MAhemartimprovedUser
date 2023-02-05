@@ -1,0 +1,103 @@
+{% extends 'base/base.html' %}
+{% comment %} {% load crispy_forms_tags %} {% endcomment %}
+
+{% block content %}
+
+<main >
+    <div class="container wow fadeIn">
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form method="POST" class="card-body">
+            {% csrf_token %}
+              <!--address-->
+              <div class="md-form mb-5">
+                {{ form.locality }}
+                <label for="address" class="">locality</label>
+              </div>
+
+              <!--address-2-->
+              <div class="md-form mb-5">
+                {{ form.city }}
+                <label for="address-2" class="">city</label>
+              </div>
+
+              <!--Grid row-->
+              <div class="row">
+
+                <!--Grid column-->
+                <div class="col-lg-4 col-md-12 mb-4">
+                  <label for="country">state</label>
+                  {{ form.state }}
+                </div>
+                <!--Grid column-->
+
+                <!--Grid column-->
+                
+                <!--Grid column-->
+
+              </div>
+              <!--Grid row-->
+
+             
+
+             <!-- <div class="d-block my-3">
+                {% for value, name in form.fields.payment_option.choices %}
+                <div class="custom-control custom-radio">
+                  <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                </div>
+                {% endfor %}
+              </div>-->
+             
+              
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+          <!--Grid column-->
+        <div class="col-md-4 mb-4">
+
+          <!-- Heading -->
+          <h4 class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Your cart</span>
+           
+          </h4>
+
+          <!-- Cart -->
+          <ul class="list-group mb-3 z-depth-1">
+            
+            
+           
+
+            
+            
+          </ul>
+          <!-- Cart -->
+
+        </div>
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock content %}
