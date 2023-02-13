@@ -1,8 +1,20 @@
 from django.db import models
 from django.conf import settings
 from shop.models import Product
-
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
+STATUS_CHOICES = (
+    ('Pending', 'Pending'),
+    ('Accepted', 'Accepted'),
+    ('Packed', 'Packed'),
+    ('On The Way', 'On The Way'),
+    ('Delivered', 'Delivered'),
+    ('Cancelled', 'Cancelled')
+)
 class Order(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True,blank=True)
+    status = models.CharField(choices=STATUS_CHOICES, max_length=50,
+        default="Pending")
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     email = models.EmailField()

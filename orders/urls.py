@@ -10,5 +10,6 @@ urlpatterns = [
     path('admin/order/<int:order_id>/pdf/',
          views.admin_order_pdf,
          name='admin_order_pdf'),
-
+    path('view/',views.view_orders,name='order_view'),
+    path('detail/<int:order_id>/',views.view_order_detail,name='order_view_detail'),
 ]

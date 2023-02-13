@@ -10,6 +10,8 @@ from django.http import HttpResponse
 from django.template.loader import render_to_string
 import weasyprint
 import os 
+from accounts.models import CustomUser
+from django.contrib.auth.decorators import login_required
 os.add_dll_directory(r"C:\Program Files\GTK3-Runtime Win64\bin")
 
 
@@ -22,10 +24,16 @@ def admin_order_detail(request, order_id):
 
 def order_create(request):
     cart = Cart(request)
+    user = request.user
+    
     if request.method == 'POST':
         form = OrderCreateForm(request.POST)
+
         if form.is_valid():
-            order = form.save()
+            order = form.save(commit=False)
+            order.user = user
+            order.save()
+            
             for item in cart:
                 OrderItem.objects.create(order=order,
                                         product=item['product'],
@@ -54,3 +62,21 @@ def admin_order_pdf(request, order_id):
         stylesheets=[weasyprint.CSS(
             settings.STATIC_ROOT / 'css/pdf.css')])
     return response
+@login_required
+def view_orders(request):
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    context = {
+        'user': user,
+        'orders': orders,
+    }
+    return render(request, 'orders/order/view_orders.html', context)
+@login_required
+def view_order_detail(request, order_id):
+    order = get_object_or_404(Order, id=order_id)
+    return render(request,
+                  'orders/order/view_orders_detail.html',
+                  {'order': order})
+
+
+
