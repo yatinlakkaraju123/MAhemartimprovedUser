@@ -11,7 +11,10 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
-
+from pathlib import Path
+from environs import Env # new
+env = Env() # new
+env.read_env() # new
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-ug@ssd)m=z$8psc^6o^s2e!*r&^@0ns9a4v=r)2sbl3%07lx!3'
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 
@@ -148,17 +151,16 @@ CART_SESSION_ID = 'cart'
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-RAZOR_KEY_ID="rzp_test_4pTTJ8OGXPUjPp"
-RAZOR_KEY_SECRET="1PHP4az86CAmwIPpyMHxo9fi"
-STRIPE_PUBLISHABLE_KEY = 'pk_test_51MUCdbSCkkSVqtruThCprjGwWlbsSLUqFhG9EdMMeiYkSUDj6HOGwS1RODLu6vBY5Khng4J1KaY2QoNDE1jj9j2J00WFACHp7a' # Publishable key
-STRIPE_SECRET_KEY = 'sk_test_51MUCdbSCkkSVqtruK4Tjlq30DkWgwvwhQv1nlhfvXDCHlgSWAthuEIstOXQuDL77ysKVNTn8SsIyysVslkABlNf400SzfQybGo' # Secret key
-STRIPE_API_VERSION = '2022-08-01'
-STRIPE_WEBHOOK_SECRET = 'whsec_9695786f0cca21b961c58ab276ebcfe1aca655e42af231af3146504d2e2d193b'
+
+STRIPE_PUBLISHABLE_KEY =env.str("STRIPE_PUBLISHABLE_KEY") # Publishable key
+STRIPE_SECRET_KEY = env.str("STRIPE_SECRET_KEY") # Secret key
+STRIPE_API_VERSION=env.str("STRIPE_API_VERSION")
+STRIPE_WEBHOOK_SECRET = env.str("STRIPE_WEBHOOK_SECRET")
 STATIC_ROOT = BASE_DIR / 'static'
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'lakkarajuyatin@gmail.com'
-EMAIL_HOST_PASSWORD = 'akxahfvcdoenwitq'
+EMAIL_HOST_USER = "lakkarajuyatin@gmail.com"
+EMAIL_HOST_PASSWORD = env.str("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 AUTH_USER_MODEL = "accounts.CustomUser" # new
